@@ -169,3 +169,6 @@ Packages/packages-lock.json linguist-generated
 
 # Exceptions for .asset files such as lightning pre-baking
 LightingData.asset     binary
+
+# Rank avatars are small UI sprites; keep them in plain git instead of LFS
+Assets/Art/RankAvatars/*.png -filter -diff -merge binary
