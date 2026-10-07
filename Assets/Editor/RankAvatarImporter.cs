@@ -1,13 +1,13 @@
 using UnityEditor;
 
-// Imports the rank avatar PNGs as UI sprites so they can be dropped straight into an Image.
+// Imports the rank avatar and UI icon PNGs as sprites so they can be dropped straight into an Image.
 public class RankAvatarImporter : AssetPostprocessor
 {
-    const string Folder = "Assets/Art/RankAvatars/";
+    static readonly string[] Folders = { "Assets/Art/RankAvatars/", "Assets/Art/Icons/" };
 
     void OnPreprocessTexture()
     {
-        if (!assetPath.StartsWith(Folder))
+        if (System.Array.FindIndex(Folders, f => assetPath.StartsWith(f)) < 0)
             return;
 
         var importer = (TextureImporter)assetImporter;
