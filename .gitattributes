@@ -176,3 +176,4 @@ Assets/Art/Icons/*.png -filter -diff -merge binary
 
 # Store screenshots are plain PNG deliverables; keep them out of LFS
 StoreScreenshots/**/*.png -filter -diff -merge binary
+Assets/TutorialInfo/Icons/*.png -filter -diff -merge binary
