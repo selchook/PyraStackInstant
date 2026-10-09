@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Baloo+2:wght@800&display=block" rel="stylesheet">
+<style>
+  :root {
+    --lapis: #2A4C9A;
+    --lapis-dark: #1B3170;
+    --lapis-light: #3E68C4;
+    --gold: #E8B83A;
+    --gold-dark: #B07F1E;
+    --teal: #2E9C93;
+    --ink: #3B2412;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: #C9932F; }
+
+  /* Gameplay sits under the banner; the empty sand at its bottom is what gets cropped. */
+  #shot {
+    position: absolute; left: 0; top: 470px;
+    width: 1080px; height: 1920px; object-fit: cover;
+  }
+
+  /* Blurred copy fills the wedge between the slanted banner and the gameplay. */
+  #fill {
+    position: absolute; left: -60px; top: 200px; width: 1200px; height: 600px;
+    object-fit: cover; object-position: top; filter: blur(30px) brightness(.9);
+  }
+  #banner { position: absolute; left: 0; top: 0; width: 1080px; height: 520px; }
+
+  #title {
+    position: absolute; left: 0; right: 0; top: 40px; height: 330px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    transform: rotate(-5.5deg);
+    font-family: 'Lilita One', sans-serif; color: #fff; text-align: center;
+    line-height: 0.95; letter-spacing: 2px;
+  }
+  #title span {
+    display: block; white-space: nowrap;
+    -webkit-text-stroke: 22px var(--ink); paint-order: stroke fill;
+    text-shadow: 0 12px 0 var(--ink), 0 18px 18px rgba(0,0,0,.35);
+  }
+  /* Lilita One has no İ/Ş/Ğ, so Turkish captions use Baloo 2. */
+  body.tr #title { font-family: 'Baloo 2', sans-serif; font-weight: 800; line-height: 0.85; letter-spacing: 0; }
+  #title .l1 { font-size: 132px; }
+  #title .l2 { font-size: 168px; }
+</style>
+</head>
+<body>
+<img id="fill" src="">
+<img id="shot" src="">
+
+<svg id="banner" viewBox="0 0 1080 520" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3E68C4"/>
+      <stop offset="1" stop-color="#1B3170"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.45" r="0.6">
+      <stop offset="0" stop-color="#5C86DE" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#5C86DE" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Faint ankh / pyramid / sun-disk motifs, the Egyptian take on the reference's stars -->
+    <symbol id="ankh" viewBox="0 0 40 60">
+      <path d="M20 2 C9 2 6 12 9 19 C11 23 14 26 17 28 L4 28 L4 34 L17 34 L17 58 L23 58 L23 34 L36 34 L36 28 L23 28 C26 26 29 23 31 19 C34 12 31 2 20 2 Z M20 8 C26 8 26 16 20 24 C14 16 14 8 20 8 Z"/>
+    </symbol>
+    <symbol id="pyr" viewBox="0 0 60 44">
+      <path d="M30 2 L58 42 L2 42 Z M30 12 L30 42 L48 42 Z" fill-rule="evenodd"/>
+    </symbol>
+    <symbol id="sun" viewBox="0 0 60 30">
+      <circle cx="30" cy="15" r="11"/>
+      <path d="M2 14 C10 8 16 12 19 15 C16 18 10 22 2 16 Z M58 14 C50 8 44 12 41 15 C44 18 50 22 58 16 Z"/>
+    </symbol>
+    <clipPath id="bandClip"><path d="M0 0 H1080 V320 L0 430 Z"/></clipPath>
+  </defs>
+
+  <!-- gold under-trim with a teal stripe, like the rank-avatar collars -->
+  <path d="M0 418 L1080 308 L1080 352 L0 462 Z" fill="#7A4E14"/>
+  <path d="M0 410 L1080 300 L1080 340 L0 450 Z" fill="var(--gold)"/>
+  <path d="M0 430 L1080 320 L1080 330 L0 440 Z" fill="var(--teal)"/>
+
+  <g clip-path="url(#bandClip)">
+    <rect width="1080" height="520" fill="url(#sky)"/>
+    <rect width="1080" height="520" fill="url(#glow)"/>
+    <g fill="#ffffff" opacity=".09">
+      <use href="#ankh" x="40"  y="40"  width="70" height="105" transform="rotate(-12 75 92)"/>
+      <use href="#pyr"  x="930" y="40"  width="110" height="80"/>
+      <use href="#sun"  x="820" y="200" width="120" height="60"/>
+      <use href="#pyr"  x="60"  y="250" width="120" height="88"/>
+      <use href="#ankh" x="965" y="150" width="56" height="84" transform="rotate(14 993 192)"/>
+      <use href="#sun"  x="190" y="20"  width="90" height="45"/>
+      <use href="#pyr"  x="700" y="10"  width="70" height="52"/>
+    </g>
+  </g>
+  <!-- thin gold top edge of the band -->
+  <path d="M0 404 L1080 294 L1080 302 L0 412 Z" fill="#FFE08A"/>
+</svg>
+
+<div id="title"><span class="l1"></span><span class="l2"></span></div>
+
+<script>
+  const p = new URLSearchParams(location.search);
+  document.body.classList.add(p.get('lang') || 'en');
+  document.getElementById('shot').src = document.getElementById('fill').src = p.get('img');
+  document.querySelector('#title .l1').textContent = p.get('l1') || '';
+  document.querySelector('#title .l2').textContent = p.get('l2') || '';
+  // Shrink a line that would overflow the canvas width.
+  document.fonts.ready.then(() => {
+    for (const el of document.querySelectorAll('#title span')) {
+      const max = 1000, w = el.getBoundingClientRect().width;
+      if (w > max) el.style.fontSize = (parseFloat(getComputedStyle(el).fontSize) * max / w) + 'px';
+    }
+    document.body.dataset.ready = '1';
+  });
+</script>
+</body>
+</html>
